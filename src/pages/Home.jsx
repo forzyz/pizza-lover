@@ -5,7 +5,7 @@ import { Sort } from '../components/Sort';
 import { PizzaBlock } from '../components/PizzaBlock';
 import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
 
-import { MyContext } from '../context';
+import { SearchContext } from '../context';
 import { useOutletContext } from 'react-router-dom';
 import { Pagination } from '../components/Pagination';
 
@@ -18,7 +18,7 @@ export const Home = () => {
     name: 'popularity',
     sortProp: 'rating',
   });
-  const [searchValue, setSearchValue] = useOutletContext();
+  const { searchValue } = React.useContext(SearchContext);
 
   React.useEffect(() => {
     const url = new URL('https://64cb635c700d50e3c705d0b2.mockapi.io/items');
@@ -60,16 +60,14 @@ export const Home = () => {
   const skeletons = [...Array(10)].map((_, index) => <PizzaSkeleton key={index} />);
 
   return (
-    <MyContext.Provider value={{ items, setItems, setIsLoading }}>
-      <div className="container">
-        <div className="content__top">
-          <Categories activeIndex={categoryId} onChangeCategory={(i) => setCategoryId(i)} />
-          <Sort sortObj={sortType} onChangeSort={(obj) => setSortType(obj)} />
-        </div>
-        <h2 className="content__title">All pizzas</h2>
-        <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-        <Pagination onChangePage={(number) => setCurrentPage(number)} />
+    <div className="container">
+      <div className="content__top">
+        <Categories activeIndex={categoryId} onChangeCategory={(i) => setCategoryId(i)} />
+        <Sort sortObj={sortType} onChangeSort={(obj) => setSortType(obj)} />
       </div>
-    </MyContext.Provider>
+      <h2 className="content__title">All pizzas</h2>
+      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+    </div>
   );
 };
