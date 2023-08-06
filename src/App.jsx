@@ -4,16 +4,15 @@ import { Outlet } from 'react-router-dom';
 import './scss/app.scss';
 
 import { Header } from './components/Header';
-import { Home } from './pages/Home';
-import { Link, Route } from 'react-router-dom';
-import Cart from './pages/Cart';
 
 function App() {
+  const [searchValue, setSearchValue] = React.useState('');
+
   return (
     <div className="wrapper">
-      <Header />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <div className="content">
-        <Outlet />
+        <Outlet context={[searchValue, setSearchValue]} />
       </div>
     </div>
   );
