@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
@@ -8,20 +9,23 @@ import { Pagination } from '../components/Pagination';
 
 import { SearchContext } from '../context';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const {categoryId, sortType } = useSelector((state) => state.filterReducer);
+  const { categoryId, sortType, currentPage } = useSelector((state) => state.filterReducer);
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [currentPage, setCurrentPage] = React.useState(1);
   const { searchValue } = React.useContext(SearchContext);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
   };
+
+  const onChangePage = (page) => {
+    dispatch(setCurrentPage(page));
+  } 
 
   React.useEffect(() => {
     const url = new URL('https://64cb635c700d50e3c705d0b2.mockapi.io/items');
@@ -36,25 +40,14 @@ export const Home = () => {
     url.searchParams.append('limit', 4);
 
     setIsLoading(true);
-    fetch(url, {
-      method: 'GET',
-      headers: { 'content-type': 'application/json' },
-    })
+    axios
+      .get(url, {
+        headers: { 'content-type': 'application/json' },
+      })
       .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          alert('Error occured when get data');
-        }
-      })
-      .then((tasks) => {
-        setItems(tasks);
+        setItems(res.data);
         setIsLoading(false);
-      })
-      .catch((error) => {
-        alert('Error occured when set data');
-        console.error(error);
-      });
+      }); 
 
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
@@ -70,7 +63,7 @@ export const Home = () => {
       </div>
       <h2 className="content__title">All pizzas</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 };

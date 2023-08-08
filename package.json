@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
     "localforage": "^1.10.0",
+    "lodash.debounce": "^4.0.8",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-content-loader": "^6.2.1",
