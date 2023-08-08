@@ -4,21 +4,24 @@ import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
 import { PizzaBlock } from '../components/PizzaBlock';
 import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
-
-import { SearchContext } from '../context';
-import { useOutletContext } from 'react-router-dom';
 import { Pagination } from '../components/Pagination';
 
+import { SearchContext } from '../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
+
 export const Home = () => {
+  const dispatch = useDispatch();
+  const {categoryId, sortType } = useSelector((state) => state.filterReducer);
+
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [sortType, setSortType] = React.useState({
-    name: 'popularity',
-    sortProp: 'rating',
-  });
   const { searchValue } = React.useContext(SearchContext);
+
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id));
+  };
 
   React.useEffect(() => {
     const url = new URL('https://64cb635c700d50e3c705d0b2.mockapi.io/items');
@@ -62,8 +65,8 @@ export const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories activeIndex={categoryId} onChangeCategory={(i) => setCategoryId(i)} />
-        <Sort sortObj={sortType} onChangeSort={(obj) => setSortType(obj)} />
+        <Categories activeIndex={categoryId} onChangeCategory={onChangeCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">All pizzas</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
