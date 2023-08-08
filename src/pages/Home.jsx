@@ -1,18 +1,24 @@
 import React from 'react';
 import axios from 'axios';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 
 import { Categories } from '../components/Categories';
-import { Sort } from '../components/Sort';
+import { Sort, list } from '../components/Sort';
 import { PizzaBlock } from '../components/PizzaBlock';
 import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
 import { Pagination } from '../components/Pagination';
 
 import { SearchContext } from '../context';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 
 export const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
+
   const { categoryId, sortType, currentPage } = useSelector((state) => state.filterReducer);
 
   const [items, setItems] = React.useState([]);
@@ -25,9 +31,9 @@ export const Home = () => {
 
   const onChangePage = (page) => {
     dispatch(setCurrentPage(page));
-  } 
+  };
 
-  React.useEffect(() => {
+  const fetchPizzas = () => {
     const url = new URL('https://64cb635c700d50e3c705d0b2.mockapi.io/items');
     const orderCheck = sortType.sortProp.includes('-') ? 'asc' : 'desc';
     const sortBy = sortType.sortProp.replace('-', '');
@@ -47,10 +53,53 @@ export const Home = () => {
       .then((res) => {
         setItems(res.data);
         setIsLoading(false);
-      }); 
+      });
 
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
+  };
+
+  // If changed params and there was first render 
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProp: sortType.sortProp,
+        categoryId,
+        currentPage,
+      });
+
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sortType.sortProp, currentPage]);
+
+
+  // If there was first render, then check URL-settings and save in redux
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+
+      const sort = list.find((obj) => obj.sortProp === params.sortProp);
+
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        }),
+      );
+      isSearch.current = true;
+    }
+  }, []);
+
+  // If there was first render, then fetch pizzas
+  React.useEffect(() => {
+    if (!isSearch.current || categoryId === 0) {
+      fetchPizzas();
+    }
+
+    isSearch.current = false;
+
+    console.log('false');
+  }, [categoryId, sortType.sortProp, searchValue, currentPage]);
 
   const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...Array(10)].map((_, index) => <PizzaSkeleton key={index} />);
