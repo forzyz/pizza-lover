@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
-import logoSvg from '../assets/img/pizza-logo.svg';
+import { useSelector } from 'react-redux';
+
 import { Search } from './Search';
+import logoSvg from '../assets/img/pizza-logo.svg';
+
+
+
 
 export function Header() {
+  const {} = useSelector(state => state.cart);
+
   return (
     <div className="header">
       <div className="container">

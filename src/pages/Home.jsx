@@ -58,7 +58,7 @@ export const Home = () => {
     window.scrollTo(0, 0);
   };
 
-  // If changed params and there was first render 
+  // If changed params and there was first render
   React.useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
@@ -71,7 +71,6 @@ export const Home = () => {
     }
     isMounted.current = true;
   }, [categoryId, sortType.sortProp, currentPage]);
-
 
   // If there was first render, then check URL-settings and save in redux
   React.useEffect(() => {
@@ -97,8 +96,6 @@ export const Home = () => {
     }
 
     isSearch.current = false;
-
-    console.log('false');
   }, [categoryId, sortType.sortProp, searchValue, currentPage]);
 
   const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
