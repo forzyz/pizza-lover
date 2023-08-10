@@ -9,17 +9,19 @@ export const CartItem = ({ id, title, type, size, price, count, imageUrl }) => {
     dispatch(
       addItem({
         id,
+        type,
+        size,
       }),
     );
   };
 
   const onClickMinus = () => {
-    dispatch(minusItem(id));
+    dispatch(minusItem({ id, type, size }));
   };
 
   const onClickRemove = () => {
     if (window.confirm('Are you sure you want to remove?')) {
-      dispatch(removeItem(id));
+      dispatch(removeItem({ id, type, size }));
     }
   };
 
@@ -30,7 +32,9 @@ export const CartItem = ({ id, title, type, size, price, count, imageUrl }) => {
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>{type}, {size} cm.</p>
+        <p>
+          {type}, {size} cm.
+        </p>
       </div>
       <div className="cart__item-count">
         <div

@@ -7,9 +7,13 @@ const typeNames = ['thin', 'traditional'];
 
 export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
   const dispatch = useDispatch();
-  const cartItem = useSelector((state) => state.cartReducer.items.find((obj) => obj.id === id));
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
+
+  const cartItems = useSelector((state) => state.cartReducer.items);
+  let cartItem = cartItems.find(
+    (obj) => obj.id === id && obj.type === typeNames[activeType] && obj.size === sizes[activeSize],
+  );
   const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAdd = () => {
@@ -24,6 +28,14 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
     dispatch(addItem(item));
   };
 
+  const onChangeType = (type) => {
+    setActiveType(type);
+  };
+
+  const onChangeSize = (size) => {
+    setActiveSize(size);
+  };
+
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
@@ -34,7 +46,7 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
             {types.map((type) => (
               <li
                 key={type}
-                onClick={() => setActiveType(type)}
+                onClick={() => onChangeType(type)}
                 className={activeType === type ? 'active' : ''}>
                 {typeNames[type]}
               </li>
@@ -44,7 +56,7 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
             {sizes.map((size, index) => (
               <li
                 key={size}
-                onClick={() => setActiveSize(index)}
+                onClick={() => onChangeSize(index)}
                 className={activeSize === index ? 'active' : ''}>
                 {size} см.
               </li>
