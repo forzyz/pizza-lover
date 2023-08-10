@@ -98,7 +98,8 @@ export const Home = () => {
     isSearch.current = false;
   }, [categoryId, sortType.sortProp, searchValue, currentPage]);
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+
+  const pizzas = items.map((obj) =>  <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...Array(10)].map((_, index) => <PizzaSkeleton key={index} />);
 
   return (
