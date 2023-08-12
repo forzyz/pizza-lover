@@ -5,6 +5,7 @@ export const fetchPizzas = createAsyncThunk('pizzas/fetchPizzasStatus', async (u
   const { data } = await axios.get(url, {
     headers: { 'content-type': 'application/json' },
   });
+
   return data;
 });
 
@@ -27,16 +28,22 @@ const pizzasSlice = createSlice({
       state.items = [];
     },
     [fetchPizzas.fulfilled]: (state, action) => {
+      console.log(action, "fulfilled");
       state.items = action.payload;
       state.status = 'success';
     },
 
     [fetchPizzas.rejected]: (state, action) => {
+      console.log(action, "rejected");
       state.status = 'error';
       state.items = [];
     },
   },
 });
 
+export const selectPizzaData = (state) => state.pizzasReducer;
+
 export const { setItems } = pizzasSlice.actions;
+
 export default pizzasSlice.reducer;
+
