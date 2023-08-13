@@ -1,19 +1,20 @@
-import React from 'react';
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import React from "react";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
 
-import App from './App.jsx';
-import { ErrorBlock } from './components/ErrorBlock/index.jsx';
-import Cart from './pages/Cart';
-import { Home } from './pages/Home.jsx';
+import App from "./App.jsx";
+import { ErrorBlock } from "./components/ErrorBlock/index.jsx";
+import Cart from "./pages/Cart";
+import { Home } from "./pages/Home.jsx";
+import { FullPizza } from "./pages/FullPizza.jsx";
 
-import { store } from './redux/store.js';
+import { store } from "./redux/store.js";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <ErrorBlock />,
     children: [
@@ -22,18 +23,19 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'cart',
+        path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "pizza/:id",
+        element: <FullPizza />,
       },
     ],
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <StrictMode>
-        <RouterProvider router={router} />
-    </StrictMode>
-  
-  </Provider>,
+    <RouterProvider router={router} />
+  </Provider>
 );

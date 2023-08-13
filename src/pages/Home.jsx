@@ -1,17 +1,21 @@
-import React from 'react';
-import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import qs from "qs";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Categories } from '../components/Categories';
-import { Sort, list } from '../components/Sort';
-import { PizzaBlock } from '../components/PizzaBlock';
-import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
-import { Pagination } from '../components/Pagination';
+import { Categories } from "../components/Categories";
+import { Sort, list } from "../components/Sort";
+import { PizzaBlock } from "../components/PizzaBlock";
+import PizzaSkeleton from "../components/PizzaBlock/PizzaSkeleton";
+import { Pagination } from "../components/Pagination";
 
-import { SearchContext } from '../context';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzasSlice';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectFilter,
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from "../redux/slices/filterSlice";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -20,7 +24,8 @@ export const Home = () => {
   const isMounted = React.useRef(false);
 
   const { items, status } = useSelector(selectPizzaData);
-  const { categoryId, sortType, currentPage, searchValue } = useSelector(selectFilter);
+  const { categoryId, sortType, currentPage, searchValue } =
+    useSelector(selectFilter);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -31,16 +36,16 @@ export const Home = () => {
   };
 
   const getPizzas = async () => {
-    const url = new URL('https://64cb635c700d50e3c705d0b2.mockapi.io/items');
-    const orderCheck = sortType.sortProp.includes('-') ? 'asc' : 'desc';
-    const sortBy = sortType.sortProp.replace('-', '');
+    const url = new URL("https://64cb635c700d50e3c705d0b2.mockapi.io/items");
+    const orderCheck = sortType.sortProp.includes("-") ? "asc" : "desc";
+    const sortBy = sortType.sortProp.replace("-", "");
 
-    categoryId > 0 && url.searchParams.append('category', `${categoryId}`);
-    url.searchParams.append('sortBy', sortBy);
-    url.searchParams.append('order', orderCheck); // order parameter is optional and will default to `asc`
-    url.searchParams.append('title', searchValue);
-    url.searchParams.append('page', currentPage);
-    url.searchParams.append('limit', 4);
+    categoryId > 0 && url.searchParams.append("category", `${categoryId}`);
+    url.searchParams.append("sortBy", sortBy);
+    url.searchParams.append("order", orderCheck); // order parameter is optional and will default to `asc`
+    url.searchParams.append("title", searchValue);
+    url.searchParams.append("page", currentPage);
+    url.searchParams.append("limit", 4);
 
     dispatch(fetchPizzas(url));
 
@@ -72,7 +77,7 @@ export const Home = () => {
         setFilters({
           ...params,
           sort,
-        }),
+        })
       );
       isSearch.current = true;
     }
@@ -87,23 +92,36 @@ export const Home = () => {
     isSearch.current = false;
   }, [categoryId, sortType.sortProp, searchValue, currentPage]);
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
-  const skeletons = [...Array(10)].map((_, index) => <PizzaSkeleton key={index} />);
+  const pizzas = items.map((obj) => (
+    <Link key={obj.id} to={`/pizza/${obj.id}`}>
+      <PizzaBlock {...obj} />
+    </Link>
+  ));
+  const skeletons = [...Array(10)].map((_, index) => (
+    <PizzaSkeleton key={index} />
+  ));
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories activeIndex={categoryId} onChangeCategory={onChangeCategory} />
+        <Categories
+          activeIndex={categoryId}
+          onChangeCategory={onChangeCategory}
+        />
         <Sort />
       </div>
       <h2 className="content__title">All pizzas</h2>
-      {status === 'error' ? (
-        <div className='content__error-info'>
+      {status === "error" ? (
+        <div className="content__error-info">
           <h2>Error occured 😕</h2>
-          <p>Failed to get pizzas :( <br/> Try again later</p>
+          <p>
+            Failed to get pizzas :( <br /> Try again later
+          </p>
         </div>
       ) : (
-        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+        <div className="content__items">
+          {status === "loading" ? skeletons : pizzas}
+        </div>
       )}
 
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
