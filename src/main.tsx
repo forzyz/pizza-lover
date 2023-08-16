@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 
 import App from "./App";
 import { ErrorBlock } from "./components/ErrorBlock/index";
-import Cart from "./pages/Cart";
+import { Cart } from "./pages/Cart";
 import { Home } from "./pages/Home";
 import { FullPizza } from "./pages/FullPizza";
 
