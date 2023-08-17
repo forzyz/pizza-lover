@@ -1,13 +1,16 @@
-import React from 'react';
+import React from "react";
 
 type CategoriesProps = {
   activeIndex: number;
-  onChangeCategory: any;
+  onChangeCategory: (i: number) => void;
 };
 
-export const Categories: React.FC<CategoriesProps> = ({activeIndex, onChangeCategory}) => {
-  const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
+const categories = ["All", "Meat", "Vegetarian", "Grill", "Spicy", "Closed"];
 
+export const Categories: React.FC<CategoriesProps> = ({
+  activeIndex,
+  onChangeCategory,
+}) => {
   return (
     <div className="categories">
       <ul>
@@ -15,14 +18,12 @@ export const Categories: React.FC<CategoriesProps> = ({activeIndex, onChangeCate
           <li
             key={index}
             onClick={() => onChangeCategory(index)}
-            className={activeIndex === index ? 'active' : ''}>
+            className={activeIndex === index ? "active" : ""}
+          >
             {value}
           </li>
         ))}
       </ul>
     </div>
   );
-}
-
- 
-
+};

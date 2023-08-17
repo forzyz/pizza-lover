@@ -8,6 +8,7 @@ export const FullPizza: React.FC = () => {
     title: string;
     price: number;
   }>();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ export const FullPizza: React.FC = () => {
         setPizza(data);
       } catch (error) {
         alert("Error occured while get pizza");
-        navigate('/');
+        navigate("/");
       }
     }
 

@@ -26,11 +26,12 @@ export function Sort() {
   const onClickListItem = (obj: ListItem) => {
     dispatch(setSortType(obj));
     setOpen(false);
-  };
+  };  
 
   React.useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (!sortRef.current?.contains(target)) {
         setOpen(false);
       }
     };
