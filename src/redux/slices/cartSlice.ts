@@ -1,21 +1,38 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+export type CartItem = {
+  id: string;
+  title: string;
+  price: number;
+  type: string;
+  size: number;
+  count: number;
+  imageUrl: string;
+};
+
+interface CartSliceState {
+  totalPrice: number;
+  totalCount: number;
+  items: CartItem[];
+}
+
+const initialState: CartSliceState = {
   totalPrice: 0,
   totalCount: 0,
   items: [],
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
-    addItem(state, action) {
+    addItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find(
         (obj) =>
           obj.id === action.payload.id &&
           obj.type === action.payload.type &&
-          obj.size === action.payload.size,
+          obj.size === action.payload.size
       );
 
       if (findItem) {
@@ -33,12 +50,12 @@ const cartSlice = createSlice({
 
       state.totalCount = state.items.reduce((sum, item) => sum + item.count, 0);
     },
-    minusItem(state, action) {
+    minusItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find(
         (obj) =>
           obj.id === action.payload.id &&
           obj.type === action.payload.type &&
-          obj.size === action.payload.size,
+          obj.size === action.payload.size
       );
 
       if (findItem && findItem.count > 0) {
@@ -51,12 +68,12 @@ const cartSlice = createSlice({
 
       state.totalCount = state.items.reduce((sum, item) => sum + item.count, 0);
     },
-    removeItem(state, action) {
+    removeItem(state, action: PayloadAction<CartItem>) {
       state.items = state.items.filter(
         (obj) =>
           obj.id !== action.payload.id ||
           obj.type !== action.payload.type ||
-          obj.size !== action.payload.size,
+          obj.size !== action.payload.size
       );
 
       state.totalPrice = state.items.reduce((sum, obj) => {
@@ -72,8 +89,8 @@ const cartSlice = createSlice({
   },
 });
 
-export const selectCart = (state) => state.cartReducer;
-export const selectCartItems = (state) => state.cartReducer.items;
+export const selectCart = (state: RootState) => state.cartReducer;
+export const selectCartItems = (state: RootState) => state.cartReducer.items;
 
 export const { addItem, removeItem, minusItem, clearItems } = cartSlice.actions;
 export default cartSlice.reducer;
