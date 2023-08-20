@@ -1,7 +1,7 @@
-@import './variables';
-@import './libs/normalize';
+@import "./variables";
+@import "./libs/normalize";
 
-@import './components/all';
+@import "./components/all";
 
 body {
   background-color: $background;
@@ -28,7 +28,6 @@ body {
     margin: 100px auto;
     width: 500px;
     text-align: center;
-    
 
     h2 {
       font-size: 32px;
@@ -244,6 +243,35 @@ body {
         svg {
           path:first-of-type {
             display: none;
+          }
+        }
+
+        &:disabled {
+          opacity: 0.4;
+          border-color: #787878;
+
+          &:active {
+            transform: none;
+          }
+
+          &:hover {
+            background-color: transparent;
+
+            svg path {
+              fill: #787878;
+            }
+          }
+
+          &:focus {
+            background-color: transparent;
+
+            svg path {
+              fill: #787878;
+            }
+          }
+
+          svg path {
+            fill: #787878;
           }
         }
       }

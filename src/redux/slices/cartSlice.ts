@@ -58,7 +58,7 @@ const cartSlice = createSlice({
           obj.size === action.payload.size
       );
 
-      if (findItem && findItem.count > 0) {
+      if (findItem) {
         findItem.count--;
       }
 

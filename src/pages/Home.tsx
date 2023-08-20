@@ -11,8 +11,6 @@ import { Pagination } from "../components/Pagination";
 import { useSelector } from "react-redux";
 import {
   FilterSliceState,
-  Sort,
-  SortPropertyEnum,
   selectFilter,
   setCategoryId,
   setCurrentPage,
@@ -31,9 +29,9 @@ export const Home: React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(selectFilter);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -110,7 +108,7 @@ export const Home: React.FC = () => {
           activeIndex={categoryId}
           onChangeCategory={onChangeCategory}
         />
-        <SortPopup />
+        <SortPopup value={sort} />
       </div>
       <h2 className="content__title">All pizzas</h2>
       {status === "error" ? (
