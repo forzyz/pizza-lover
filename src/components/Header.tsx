@@ -6,7 +6,7 @@ import { Search } from "./Search/index";
 import logoSvg from "../assets/img/pizza-logo.svg";
 import { selectCart } from "../redux/cart/selectors";
 
-export function Header() {
+const Header: React.FC = () => {
   const { items, totalCount, totalPrice } = useSelector(selectCart);
   const location = useLocation();
   const isMounted = React.useRef(false);
@@ -73,4 +73,6 @@ export function Header() {
       </div>
     </div>
   );
-}
+};
+
+export default Header;

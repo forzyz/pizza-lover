@@ -1,22 +1,26 @@
-import React from "react";
-import { StrictMode } from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import App from "./App";
-import { ErrorBlock } from "./components/ErrorBlock/index";
-import { Cart } from "./pages/Cart";
 import { Home } from "./pages/Home";
-import { FullPizza } from "./pages/FullPizza";
 
 import { store } from "./redux/store.js";
+
+const Cart = React.lazy(() => import("./pages/Cart"));
+const FullPizza = React.lazy(() => import("./pages/FullPizza"));
+const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorBlock />,
+    errorElement: (
+      <Suspense fallback={<div>Error is loading....</div>}>
+        <ErrorPage />
+      </Suspense>
+    ),
     children: [
       {
         index: true,
@@ -24,11 +28,19 @@ const router = createBrowserRouter([
       },
       {
         path: "cart",
-        element: <Cart />,
+        element: (
+          <Suspense fallback={<div>Cart is loading....</div>}>
+            <Cart />
+          </Suspense>
+        ),
       },
       {
         path: "pizza/:id",
-        element: <FullPizza />,
+        element: (
+          <Suspense fallback={<div>Pizza is loading....</div>}>
+            <FullPizza />
+          </Suspense>
+        ),
       },
     ],
   },

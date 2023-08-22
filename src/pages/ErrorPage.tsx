@@ -1,4 +1,6 @@
 import React from "react";
-import { ErrorBlock } from "../components/ErrorBlock";
+import { ErrorBlock } from "../components";
 
-export const ErrorPage: React.FC = () => <ErrorBlock />;
+const ErrorPage: React.FC = () => <ErrorBlock />;
+
+export default ErrorPage;

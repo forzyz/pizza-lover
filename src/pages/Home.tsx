@@ -2,11 +2,15 @@ import React from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
-import { Categories } from "../components/Categories";
-import { SortPopup, list } from "../components/Sort";
-import { PizzaBlock } from "../components/PizzaBlock";
-import PizzaSkeleton from "../components/PizzaBlock/PizzaSkeleton";
-import { Pagination } from "../components/Pagination";
+import { list } from "../components/Sort";
+
+import {
+  PizzaSkeleton,
+  PizzaBlock,
+  Categories,
+  Sort,
+  Pagination,
+} from "../components";
 
 import { useSelector } from "react-redux";
 
@@ -110,7 +114,7 @@ export const Home: React.FC = () => {
           activeIndex={categoryId}
           onChangeCategory={onChangeCategory}
         />
-        <SortPopup value={sort} />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">All pizzas</h2>
       {status === "error" ? (

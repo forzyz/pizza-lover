@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Sort, SortPropertyEnum } from "../redux/filter/types";
+import { Sort as SortType, SortPropertyEnum } from "../redux/filter/types";
 import { setSortType } from "../redux/filter/slice";
 
 type ListItem = {
@@ -9,7 +9,7 @@ type ListItem = {
 };
 
 type SortPopupProps = {
-  value: Sort;
+  value: SortType;
 };
 
 export const list: ListItem[] = [
@@ -21,7 +21,7 @@ export const list: ListItem[] = [
   { name: "alphabet (Ascending)", sortProp: SortPropertyEnum.TITLE_ASC },
 ];
 
-export const SortPopup: React.FC<SortPopupProps> = React.memo(({ value }) => {
+export const Sort: React.FC<SortPopupProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
   const sortRef = React.useRef<HTMLDivElement>(null);
 

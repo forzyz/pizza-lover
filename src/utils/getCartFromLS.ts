@@ -1,4 +1,4 @@
-import { CartItem } from "../../redux/cart/types";
+import { CartItem } from "../redux/cart/types";
 import { calcTotalCount } from "./calcTotalCount";
 import { calcTotalPrice } from "./calcTotalPrice";
 
