@@ -7,16 +7,16 @@ export const CartEmpty: React.FC = () => {
   return (
     <div className="cart cart--empty">
       <h2>
-        Корзина пустая <span>😕</span>
+        Cart is empty <span>😕</span>
       </h2>
       <p>
-        Вероятней всего, вы не заказывали ещё пиццу.
+        You probably haven't ordered pizza yet.
         <br />
-        Для того, чтобы заказать пиццу, перейди на главную страницу.
+        To order pizza, go to the main page.
       </p>
       <img src={cartEmptyImg} alt="Empty cart" />
       <Link to="/" className="button button--black">
-        <span>Вернуться назад</span>
+        <span>Back</span>
       </Link>
     </div>
   );

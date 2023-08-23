@@ -14,7 +14,7 @@ const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
 
 const router = createHashRouter([
   {
-    path: "/pizza-lover",
+    path: "/*",
     element: <App />,
     errorElement: (
       <Suspense fallback={<div>Error is loading....</div>}>
