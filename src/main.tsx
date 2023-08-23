@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import App from "./App";
@@ -12,7 +12,7 @@ const Cart = React.lazy(() => import("./pages/Cart"));
 const FullPizza = React.lazy(() => import("./pages/FullPizza"));
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/pizza-lover",
     element: <App />,
