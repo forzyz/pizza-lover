@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "pizza-lover/cart",
+        path: "cart",
         element: (
           <Suspense fallback={<div>Cart is loading....</div>}>
             <Cart />
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "pizza-lover/pizza/:id",
+        path: "pizza/:id",
         element: (
           <Suspense fallback={<div>Pizza is loading....</div>}>
             <FullPizza />
