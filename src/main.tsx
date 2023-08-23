@@ -14,7 +14,7 @@ const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/pizza-lover",
     element: <App />,
     errorElement: (
       <Suspense fallback={<div>Error is loading....</div>}>
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "cart",
+        path: "pizza-lover/cart",
         element: (
           <Suspense fallback={<div>Cart is loading....</div>}>
             <Cart />
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "pizza/:id",
+        path: "pizza-lover/pizza/:id",
         element: (
           <Suspense fallback={<div>Pizza is loading....</div>}>
             <FullPizza />
