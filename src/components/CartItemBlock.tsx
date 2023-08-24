@@ -42,6 +42,7 @@ export const CartItem: React.FC<CartItemProps> = (props) => {
           {type}, {size} cm.
         </p>
       </div>
+
       <div className="cart__item-count">
         <button
           disabled={count === 1}

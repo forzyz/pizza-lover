@@ -132,6 +132,10 @@ body {
     .content__title {
       margin: 0;
     }
+
+    @media (max-width: 900px) {
+      margin: 20px auto;
+    }
   }
 }
 
@@ -196,21 +200,33 @@ body {
   }
 
   &__item {
-    display: flex;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
     border-top: 1px solid $gray-line;
-    padding-top: 30px;
     margin-top: 30px;
+    padding-top: 30px;
+
+    @media (max-width: 900px) {
+      justify-items: center;
+      grid-template-columns: repeat(2, 2fr) 1fr;
+      grid-template-rows: repeat(2, 1fr);
+    }
 
     &-img {
       display: flex;
       align-items: center;
       margin-right: 15px;
-      width: 10%;
 
       img {
         width: 80px;
         height: 80px;
+      }
+
+      @media (max-width: 900px) {
+        margin-right: 0;
       }
     }
 
@@ -218,7 +234,6 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 40%;
 
       h3 {
         font-weight: bold;
@@ -237,7 +252,25 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 13%;
+      width: 63%;
+      justify-self: center;
+
+      @media (max-width: 900px) {
+        grid-row: 2;
+        width: 41%;
+      }
+
+      @media (max-width: 750px) {
+        width: 45%;
+      }
+
+      @media (max-width: 590px) {
+        width: 50%;
+      }
+
+      @media (max-width: 490px) {
+        width: 73%;
+      }
 
       &-minus {
         svg {
@@ -285,7 +318,11 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 33%;
+      justify-self: center;
+
+      @media (max-width: 900px) {
+        grid-row: 2;
+      }
 
       b {
         font-weight: bold;
@@ -297,8 +334,11 @@ body {
     &-remove {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      width: 4%;
+      justify-self: center;
+
+      @media (max-width: 900px) {
+        grid-row: 2;
+      }
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);
@@ -334,6 +374,11 @@ body {
       display: flex;
       justify-content: space-between;
 
+      @media (max-width: 472px) {
+        white-space: nowrap;
+        flex-direction: column;
+      }
+
       span {
         font-size: 22px;
 
@@ -341,6 +386,9 @@ body {
           b {
             color: $orange;
           }
+        }
+        @media (max-width: 472px) {
+          padding-top: 10px;
         }
       }
     }
@@ -350,11 +398,21 @@ body {
       justify-content: space-between;
       margin-top: 40px;
 
+      @media (max-width: 510px) {
+        align-items: center;
+        flex-direction: column-reverse;
+      }
+
       .go-back-btn {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 210px;
+
+        @media (max-width: 510px) {
+          margin-top: 30px;
+          padding: 15px 20px;
+        }
 
         border-color: darken($color: $gray-line, $amount: 10);
 
@@ -426,6 +484,15 @@ body {
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+    }
+
+    @media (max-width: 640px) {
+      margin: 0 auto;
+      width: 400px;
+    }
+
+    @media (max-width: 426px) {
+      width: 94%;
     }
   }
 }
