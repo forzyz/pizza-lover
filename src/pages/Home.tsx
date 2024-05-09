@@ -44,7 +44,7 @@ export const Home: React.FC = () => {
   };
 
   const getPizzas = async () => {
-    const url = new URL("https://64cb635c700d50e3c705d0b2.mockapi.io/items");
+    const url = new URL("https://663c289f17145c4d8c354fa0.mockapi.io/items");
     const orderCheck = sort.sortProp.includes("-") ? "asc" : "desc";
     const sortBy = sort.sortProp.replace("-", "");
 
